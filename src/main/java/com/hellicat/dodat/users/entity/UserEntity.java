@@ -1,10 +1,12 @@
 package com.hellicat.dodat.users.entity;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.hibernate.annotations.UuidGenerator;
 
 import com.hellicat.dodat.global.entity.BaseTimeEntity;
+import com.hellicat.dodat.routines.entity.RoutineEntity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -23,17 +25,21 @@ public class UserEntity extends BaseTimeEntity {
 	@UuidGenerator
 	private UUID id;
 
-	private String user_id;
+	@Column
+	private String email;
 
-	@Column(nullable = true)
+	@Column(nullable = false)
 	private String refresh_token;
+
+	private List<RoutineEntity> routines;
 
 	@Builder
 	private UserEntity(String user_id) {
-		this.user_id = user_id;
+		this.email = user_id;
 	}
 
 	public void updateRefreshToken(String token) {
 		this.refresh_token = token;
 	}
+
 }
