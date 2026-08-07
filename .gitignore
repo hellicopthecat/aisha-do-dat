@@ -434,3 +434,6 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/eclipse,macos,windows,java,intellij,visualstudiocode,netbeans,node
+
+application-release.properties
+.gradle/
