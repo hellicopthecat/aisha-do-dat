@@ -1,4 +1,4 @@
-package com.company.pjn;
+package com.hellicat.dodat;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

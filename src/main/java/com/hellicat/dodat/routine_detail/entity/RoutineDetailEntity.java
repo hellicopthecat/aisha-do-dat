@@ -1,4 +1,4 @@
-package com.hellicat.dodat.routine_detail.entitny;
+package com.hellicat.dodat.routine_detail.entity;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -27,30 +27,39 @@ public class RoutineDetailEntity extends BaseTimeEntity {
 	@UuidGenerator
 	private UUID id;
 
+	@Column(nullable = false)
+	private LocalDateTime pre_event_start_at; // 루틴 예상 시점 
+
+	@Column(nullable = false)
+	private LocalDateTime pre_event_end_at; // 루틴 예상 시점
+
+	@Column
+	private LocalDateTime start_at; // 루틴이 시작 시점
+
+	@Column
+	private LocalDateTime end_at; // 루틴이 끝난 시점
+
+	@Column
+	private String routine_desc_txt; //상세 루틴 설명 마크다운용
+
 	@ManyToOne
 	@JoinColumn(name = "routine_id")
 	private RoutineEntity routine;
 
-	@Column
-	private LocalDateTime pre_event_at; // 루틴 예상 시점 
-
-	@Column(nullable = false)
-	private LocalDateTime start_at; // 루틴이 시작 시점
-
-	@Column(nullable = false)
-	private LocalDateTime end_at; // 루틴이 끝난 시점
-
-	@Column(nullable = false)
-	private String routine_desc_txt; //상세 루틴 설명 마크다운용
-
 	@Builder
-	private RoutineDetailEntity(LocalDateTime pre_event_at) {
-		this.pre_event_at = pre_event_at;
+	private RoutineDetailEntity(LocalDateTime pre_event_start_at, LocalDateTime pre_event_end_at) {
+		this.pre_event_start_at = pre_event_start_at;
+		this.pre_event_end_at = pre_event_end_at;
 	}
 
 	// 예상 시점 업데이트하기  
-	public void updatePreEventAt(LocalDateTime pre_event_at) {
-		this.pre_event_at = pre_event_at;
+	public void updatePreEventStartAt(LocalDateTime pre_event_start_at) {
+		this.pre_event_start_at = pre_event_start_at;
+	}
+
+	//예상 시점 업데이트하기  
+	public void updatePreEventEndAt(LocalDateTime pre_event_end_at) {
+		this.pre_event_end_at = pre_event_end_at;
 	}
 
 	// 시작 시간 업데이트 
