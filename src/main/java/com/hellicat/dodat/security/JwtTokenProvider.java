@@ -52,12 +52,19 @@ public class JwtTokenProvider {
 		return at;
 	}
 
-	// validate 토큰 
+	public UUID parseUserId(String token, boolean isRefresh) {
+		String key = isRefresh ? rf_key : at_key;
+		String subject = Jwts.parser()
+			.verifyWith(Keys.hmacShaKeyFor(Base64.getDecoder().decode(key)))
+			.build().parseSignedClaims(token).getPayload().getSubject();
+		UUID userId = UUID.fromString(subject);
+		return userId;
+	}
 
-	// 엑세스토큰 추출
-
-	// 리프레시토큰 추출 
-
-	// 엑세스토큰 연장 
+	// 엑세스토큰 연장
+	public String reissueAccessToken(String refreshToken) {
+		UUID userId = parseUserId(refreshToken, true);
+		return createAccessToken(userId);
+	}
 
 }

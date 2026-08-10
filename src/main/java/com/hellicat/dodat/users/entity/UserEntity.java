@@ -47,7 +47,10 @@ public class UserEntity extends BaseTimeEntity {
 	@Column(nullable = false)
 	private String provider_id;
 
-	@Column()
+	@Column
+	private String name;
+
+	@Column
 	private String refresh_token;
 
 	@OneToMany(mappedBy = "user")
@@ -57,10 +60,11 @@ public class UserEntity extends BaseTimeEntity {
 	private List<RoutineAccessEntity> access_routines = new ArrayList<RoutineAccessEntity>();
 
 	@Builder
-	private UserEntity(String email, SocialEnums social, String providerId) {
+	private UserEntity(String email, SocialEnums social, String providerId, String name) {
 		this.email = email;
 		this.social = social;
 		this.provider_id = providerId;
+		this.name = name;
 	}
 
 	public void updateRefreshToken(String token) {
