@@ -1,17 +1,21 @@
 package com.hellicat.dodat.routine_detail.entity;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 import java.util.UUID;
 
 import org.hibernate.annotations.UuidGenerator;
 
 import com.hellicat.dodat.global.entity.BaseTimeEntity;
+import com.hellicat.dodat.routine_tags.entity.RoutineTagEntity;
 import com.hellicat.dodat.routines.entity.RoutineEntity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -41,6 +45,10 @@ public class RoutineDetailEntity extends BaseTimeEntity {
 
 	@Column
 	private String routine_desc_txt; //상세 루틴 설명 마크다운용
+
+	@ManyToMany
+	@JoinTable(name = "routine_detail_tag", joinColumns = @JoinColumn(name = "routine_detail_id"), inverseJoinColumns = @JoinColumn(name = "routine_tag_id"))
+	private Set<RoutineTagEntity> tags; // 루틴 태그 
 
 	@ManyToOne
 	@JoinColumn(name = "routine_id")
