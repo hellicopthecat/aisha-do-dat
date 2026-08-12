@@ -31,6 +31,9 @@ public class RoutineDetailEntity extends BaseTimeEntity {
 	@UuidGenerator
 	private UUID id;
 
+	@Column
+	private long priorityTwoDepth;
+
 	@Column(nullable = false)
 	private LocalDateTime pre_event_start_at; // 루틴 예상 시점 
 

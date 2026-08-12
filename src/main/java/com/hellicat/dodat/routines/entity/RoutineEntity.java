@@ -42,6 +42,9 @@ public class RoutineEntity extends BaseTimeEntity {
 	@Column
 	private String routine_desc;
 
+	@Column
+	private long priorityOneDepth;
+
 	// 1차 그룹 
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
