@@ -198,6 +198,9 @@ fabric.properties
 *.war
 *.nar
 *.ear
+
+# Local project documentation
+docs/
 *.zip
 *.tar.gz
 *.rar

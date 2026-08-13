@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.web.csrf.CsrfToken;
+import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.CookieValue;
@@ -36,10 +38,13 @@ public class GoogleAuthController {
 
 	private final UserService userService;
 	private final JwtTokenProvider jwtProvider;
+	private final CsrfTokenRepository csrfTokenRepository;
 
-	public GoogleAuthController(UserService userService, JwtTokenProvider provider) {
+	public GoogleAuthController(UserService userService, JwtTokenProvider provider,
+		CsrfTokenRepository csrfTokenRepository) {
 		this.userService = userService;
 		this.jwtProvider = provider;
+		this.csrfTokenRepository = csrfTokenRepository;
 	}
 
 	@GetMapping("/login")
@@ -157,6 +162,9 @@ public class GoogleAuthController {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
 				.header(HttpHeaders.SET_COOKIE, cookie.toString()).build();
 		}
+
+		CsrfToken csrfToken = csrfTokenRepository.generateToken(req);
+		csrfTokenRepository.saveToken(csrfToken, req, res);
 
 		return ResponseEntity.ok(Map.of("access_token", accessToken, "refresh_token", refreshToken));
 	}
