@@ -32,8 +32,8 @@ import com.hellicat.dodat.users.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@RestController
 @RequestMapping("/api/auth/google")
+@RestController
 public class GoogleAuthController {
 
 	private final UserService userService;
