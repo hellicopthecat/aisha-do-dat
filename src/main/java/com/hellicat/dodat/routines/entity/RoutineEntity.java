@@ -43,7 +43,7 @@ public class RoutineEntity extends BaseTimeEntity {
 	private String routine_desc;
 
 	@Column
-	private long priorityOneDepth;
+	private long priorityOneDepth = 0l;
 
 	// 1차 그룹 
 	@Enumerated(EnumType.STRING)
@@ -83,6 +83,10 @@ public class RoutineEntity extends BaseTimeEntity {
 
 	public void updateRoutineDesc(String desc) {
 		this.routine_desc = desc;
+	}
+
+	public void updateRoutinePriorityOneDepth(long priority) {
+		this.priorityOneDepth = priority;
 	}
 
 	public void updateRoutineCategory(OneDepthEnums category) {

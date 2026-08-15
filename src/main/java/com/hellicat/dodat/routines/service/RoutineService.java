@@ -9,5 +9,7 @@ import com.hellicat.dodat.routines.entity.RoutineEntity;
 
 @Service
 public interface RoutineService {
-	public RoutineEntity createRoutine(List<RoutineDetailEntity> detail, RoutineEntity routine);;
+
+	public RoutineEntity createRoutine(List<RoutineDetailEntity> detail, RoutineEntity routine);
+
 }

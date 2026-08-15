@@ -6,9 +6,9 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.hellicat.dodat.commons.enums.OneDepthEnums;
 import com.hellicat.dodat.routine_detail.entity.RoutineDetailEntity;
 import com.hellicat.dodat.routine_detail.service.RoutineDetailService;
+import com.hellicat.dodat.routines.dto.request.RoutineUpdateDto;
 import com.hellicat.dodat.routines.entity.RoutineEntity;
 import com.hellicat.dodat.routines.repo.RoutineRepo;
 
@@ -35,22 +35,26 @@ public class RoutineServiceImpl implements RoutineService {
 		return repo.findById(id).orElseThrow(() -> new EntityNotFoundException("해당 루틴을 찾을 수 없습니다."));
 	}
 
-	@Transactional
-	public void updateRoutineTitle(UUID id, String title) {
-		RoutineEntity routine = getRoutine(id);
-		routine.updateRoutineTitle(title);
+	public List<RoutineEntity> findAllByUserId(UUID userId) {
+		return repo.findAllByUser_id(userId);
 	}
 
 	@Transactional
-	public void updateRoutineDesc(UUID id, String desc) {
+	public RoutineEntity updateRoutine(UUID id, RoutineUpdateDto dto) {
 		RoutineEntity routine = getRoutine(id);
-		routine.updateRoutineDesc(desc);
-	}
-
-	@Transactional
-	public void updateRoutineCategory(UUID id, OneDepthEnums category) {
-		RoutineEntity routine = getRoutine(id);
-		routine.updateRoutineCategory(category);
+		if (dto.title() != null) {
+			routine.updateRoutineTitle(dto.title());
+		}
+		if (dto.desc() != null) {
+			routine.updateRoutineDesc(dto.desc());
+		}
+		if (dto.priorityOneDepth() != null) {
+			routine.updateRoutinePriorityOneDepth(dto.priorityOneDepth());
+		}
+		if (dto.category() != null) {
+			routine.updateRoutineCategory(dto.category());
+		}
+		return routine;
 	}
 
 	@Transactional

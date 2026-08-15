@@ -1,5 +1,7 @@
 package com.hellicat.dodat.users.service;
 
+import java.util.UUID;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,7 +24,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	public UserEntity findUserByEmail(String email) {
-		return userRepo.findByEmail(email).orElse(null);
+		return userRepo.findByEmail(email).orElseThrow(() -> new EntityNotFoundException(email));
 	}
 
 	public UserEntity getUserByEmail(String email) {
@@ -36,8 +38,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Transactional
-	public void logoutUser(String email) {
-		UserEntity user = getUserByEmail(email);
+	public void logoutUser(UUID id) {
+		UserEntity user = userRepo.findById(id).orElseThrow(() -> new EntityNotFoundException("존재하지 않는 유저입니다."));
 		user.clearRefreshToken();
 	}
 }
