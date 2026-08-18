@@ -16,4 +16,9 @@ public class GlobalExceptionHandler {
 	public ResponseEntity<ResultDto<Void>> handleNotFound(EntityNotFoundException e) {
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ResultDto.fail(e.getMessage(), "404"));
 	}
+
+	@ExceptionHandler(IllegalArgumentException.class)
+	public ResponseEntity<ResultDto<Void>> handleBadRequest(IllegalArgumentException e) {
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ResultDto.fail(e.getMessage(), "400"));
+	}
 }

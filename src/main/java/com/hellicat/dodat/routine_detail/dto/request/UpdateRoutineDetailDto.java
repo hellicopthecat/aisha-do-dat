@@ -1,4 +1,4 @@
-package com.hellicat.dodat.routine_detail.dtos;
+package com.hellicat.dodat.routine_detail.dto.request;
 
 import java.time.LocalDateTime;
 
