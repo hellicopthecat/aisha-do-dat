@@ -7,6 +7,7 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.hellicat.dodat.routine_detail.dto.request.CreateRoutineDetailDto;
 import com.hellicat.dodat.routine_detail.dto.request.UpdateRoutineDetailDto;
 import com.hellicat.dodat.routine_detail.entity.RoutineDetailEntity;
 import com.hellicat.dodat.routine_detail.repo.RoutineDetailRepo;
@@ -23,10 +24,18 @@ public class RoutineDetailServiceImpl implements RoutineDetailService {
 	}
 
 	@Override
-	public List<RoutineDetailEntity> createRoutineDetailList(List<RoutineDetailEntity> details) {
+	public List<RoutineDetailEntity> createRoutineDetailList(List<CreateRoutineDetailDto> details) {
 		List<RoutineDetailEntity> newDetails = new ArrayList<RoutineDetailEntity>();
-		for (RoutineDetailEntity detail : details) {
-			RoutineDetailEntity save = repo.save(detail);
+		for (CreateRoutineDetailDto detail : details) {
+			RoutineDetailEntity routineDetailEntity = RoutineDetailEntity.builder()
+				.priorityTwoDepth(detail.priorityTwoDepth)
+				.pre_event_start_at(detail.pre_event_start_at)
+				.pre_event_end_at(detail.pre_event_end_at)
+				.start_at(detail.start_at)
+				.end_at(detail.end_at)
+				.routine_desc_txt(detail.routine_desc_txt).build();
+
+			RoutineDetailEntity save = repo.save(routineDetailEntity);
 			newDetails.add(save);
 		}
 		return newDetails;

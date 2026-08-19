@@ -58,9 +58,20 @@ public class RoutineDetailEntity extends BaseTimeEntity {
 	private RoutineEntity routine;
 
 	@Builder
-	private RoutineDetailEntity(LocalDateTime pre_event_start_at, LocalDateTime pre_event_end_at) {
+	private RoutineDetailEntity(
+		long priorityTwoDepth,
+		LocalDateTime pre_event_start_at,
+		LocalDateTime pre_event_end_at,
+		LocalDateTime start_at,
+		LocalDateTime end_at,
+		String routine_desc_txt,
+		Set<String> tags) {
+		this.priorityTwoDepth = priorityTwoDepth;
 		this.pre_event_start_at = pre_event_start_at;
 		this.pre_event_end_at = pre_event_end_at;
+		this.start_at = start_at;
+		this.end_at = end_at;
+		this.routine_desc_txt = routine_desc_txt;
 	}
 
 	// 예상 시점 업데이트하기  
