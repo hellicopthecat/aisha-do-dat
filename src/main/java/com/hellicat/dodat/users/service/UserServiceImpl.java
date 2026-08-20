@@ -19,18 +19,26 @@ public class UserServiceImpl implements UserService {
 		this.userRepo = repo;
 	}
 
+	@Override
 	public UserEntity createUser(UserEntity user) {
 		return userRepo.save(user);
 	}
 
+	public UserEntity findUserById(UUID id) {
+		return userRepo.findById(id).orElseThrow(() -> new EntityNotFoundException("존재하지 않는 유저입니다."));
+	}
+
+	@Override
 	public UserEntity findUserByEmail(String email) {
 		return userRepo.findByEmail(email).orElseThrow(() -> new EntityNotFoundException(email));
 	}
 
+	@Override
 	public UserEntity getUserByEmail(String email) {
 		return userRepo.findByEmail(email).orElseThrow(() -> new EntityNotFoundException(email));
 	}
 
+	@Override
 	@Transactional
 	public void updateRefreshToken(String email, String refreshToken) {
 		UserEntity user = getUserByEmail(email);

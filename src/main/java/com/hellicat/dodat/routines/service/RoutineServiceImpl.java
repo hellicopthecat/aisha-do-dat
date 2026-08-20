@@ -6,6 +6,7 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.hellicat.dodat.routine_detail.dto.request.CreateRoutineDetailDto;
 import com.hellicat.dodat.routine_detail.entity.RoutineDetailEntity;
 import com.hellicat.dodat.routine_detail.service.RoutineDetailService;
 import com.hellicat.dodat.routines.dto.request.RoutineUpdateDto;
@@ -25,8 +26,8 @@ public class RoutineServiceImpl implements RoutineService {
 	}
 
 	@Override
-	public RoutineEntity createRoutine(List<RoutineDetailEntity> detail, RoutineEntity routine) {
-		List<RoutineDetailEntity> routineDetails = routineDetailService.createRoutineDetailList(detail);
+	public RoutineEntity createRoutine(RoutineEntity routine, List<CreateRoutineDetailDto> detailList) {
+		List<RoutineDetailEntity> routineDetails = routineDetailService.createRoutineDetailList(detailList);
 		routine.initRoutineDetail(routineDetails);
 		return repo.save(routine);
 	}

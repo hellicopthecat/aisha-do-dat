@@ -1,22 +1,24 @@
 package com.hellicat.dodat.routine_detail.dto.request;
 
 import java.time.LocalDateTime;
-import java.util.Set;
+import java.util.List;
 
-public class CreateRoutineDetailDto {
+public record CreateRoutineDetailDto(
 
-	public Long priorityTwoDepth;
+	Long priorityTwoDepth,
 
-	public LocalDateTime pre_event_start_at;
+	LocalDateTime pre_event_start_at,
 
-	public LocalDateTime pre_event_end_at;
+	LocalDateTime pre_event_end_at,
 
-	public LocalDateTime start_at;
+	LocalDateTime start_at,
 
-	public LocalDateTime end_at;
+	LocalDateTime end_at,
 
-	public String routine_desc_txt;
+	String routine_desc_txt,
 
-	public Set<String> tags;
+	List<String> tags
+
+) {
 
 }

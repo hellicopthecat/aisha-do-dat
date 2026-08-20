@@ -11,6 +11,7 @@ import com.hellicat.dodat.routine_detail.dto.request.CreateRoutineDetailDto;
 import com.hellicat.dodat.routine_detail.dto.request.UpdateRoutineDetailDto;
 import com.hellicat.dodat.routine_detail.entity.RoutineDetailEntity;
 import com.hellicat.dodat.routine_detail.repo.RoutineDetailRepo;
+import com.hellicat.dodat.routine_tags.entity.RoutineTagEntity;
 
 import jakarta.persistence.EntityNotFoundException;
 
@@ -25,25 +26,48 @@ public class RoutineDetailServiceImpl implements RoutineDetailService {
 
 	@Override
 	public List<RoutineDetailEntity> createRoutineDetailList(List<CreateRoutineDetailDto> details) {
+
 		List<RoutineDetailEntity> newDetails = new ArrayList<RoutineDetailEntity>();
+		List<RoutineTagEntity> newTags = new ArrayList<RoutineTagEntity>();
 		for (CreateRoutineDetailDto detail : details) {
 			RoutineDetailEntity routineDetailEntity = RoutineDetailEntity.builder()
-				.priorityTwoDepth(detail.priorityTwoDepth)
-				.pre_event_start_at(detail.pre_event_start_at)
-				.pre_event_end_at(detail.pre_event_end_at)
-				.start_at(detail.start_at)
-				.end_at(detail.end_at)
-				.routine_desc_txt(detail.routine_desc_txt).build();
+				.priorityTwoDepth(detail.priorityTwoDepth())
+				.pre_event_start_at(detail.pre_event_start_at())
+				.pre_event_end_at(detail.pre_event_end_at())
+				.start_at(detail.start_at())
+				.end_at(detail.end_at())
+				.routine_desc_txt(detail.routine_desc_txt())
+				.build();
+
+			for (String tag : detail.tags()) {
+				RoutineTagEntity routineTagEntity = RoutineTagEntity.builder()
+					.tag(tag)
+					.detail(routineDetailEntity)
+					.build();
+				newTags.add(routineTagEntity);
+			}
+
+			routineDetailEntity.updateTags(newTags);
 
 			RoutineDetailEntity save = repo.save(routineDetailEntity);
 			newDetails.add(save);
 		}
+
 		return newDetails;
 	}
 
 	@Override
-	public RoutineDetailEntity createRoutineDetail(RoutineDetailEntity detail) {
-		return repo.save(detail);
+	public RoutineDetailEntity createRoutineDetail(CreateRoutineDetailDto detail) {
+
+		RoutineDetailEntity newOne = RoutineDetailEntity.builder()
+			.priorityTwoDepth(detail.priorityTwoDepth())
+			.pre_event_start_at(detail.pre_event_start_at())
+			.pre_event_end_at(detail.pre_event_end_at())
+			.start_at(detail.start_at())
+			.end_at(detail.end_at())
+			.routine_desc_txt(detail.routine_desc_txt()).build();
+
+		return repo.save(newOne);
 	}
 
 	@Override

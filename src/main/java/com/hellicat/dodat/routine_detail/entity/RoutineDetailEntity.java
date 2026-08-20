@@ -1,7 +1,7 @@
 package com.hellicat.dodat.routine_detail.entity;
 
 import java.time.LocalDateTime;
-import java.util.Set;
+import java.util.List;
 import java.util.UUID;
 
 import org.hibernate.annotations.UuidGenerator;
@@ -51,7 +51,7 @@ public class RoutineDetailEntity extends BaseTimeEntity {
 
 	@ManyToMany
 	@JoinTable(name = "routine_detail_tag", joinColumns = @JoinColumn(name = "routine_detail_id"), inverseJoinColumns = @JoinColumn(name = "routine_tag_id"))
-	private Set<RoutineTagEntity> tags; // 루틴 태그 
+	private List<RoutineTagEntity> tags; // 루틴 태그 
 
 	@ManyToOne
 	@JoinColumn(name = "routine_id")
@@ -65,13 +65,14 @@ public class RoutineDetailEntity extends BaseTimeEntity {
 		LocalDateTime start_at,
 		LocalDateTime end_at,
 		String routine_desc_txt,
-		Set<String> tags) {
+		List<RoutineTagEntity> tags) {
 		this.priorityTwoDepth = priorityTwoDepth;
 		this.pre_event_start_at = pre_event_start_at;
 		this.pre_event_end_at = pre_event_end_at;
 		this.start_at = start_at;
 		this.end_at = end_at;
 		this.routine_desc_txt = routine_desc_txt;
+		this.tags = tags;
 	}
 
 	// 예상 시점 업데이트하기  
@@ -98,4 +99,7 @@ public class RoutineDetailEntity extends BaseTimeEntity {
 		this.routine_desc_txt = txt;
 	}
 
+	public void updateTags(List<RoutineTagEntity> tags) {
+		this.tags = tags;
+	}
 }

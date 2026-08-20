@@ -1,7 +1,7 @@
 package com.hellicat.dodat.routine_detail.dto.response;
 
 import java.time.LocalDateTime;
-import java.util.Set;
+import java.util.List;
 import java.util.UUID;
 
 import com.hellicat.dodat.routine_detail.entity.RoutineDetailEntity;
@@ -15,7 +15,7 @@ public record RoutineDetailResponseDto(
 	LocalDateTime start_at,
 	LocalDateTime end_at,
 	String routine_desc_txt,
-	Set<RoutineTagEntity> tags,
+	List<RoutineTagEntity> tags,
 	UUID routine_id) {
 
 	public static RoutineDetailResponseDto from(RoutineDetailEntity detail) {

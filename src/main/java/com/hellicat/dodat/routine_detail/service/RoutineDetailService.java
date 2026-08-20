@@ -11,9 +11,9 @@ import com.hellicat.dodat.routine_detail.entity.RoutineDetailEntity;
 @Service
 public interface RoutineDetailService {
 
-	List<RoutineDetailEntity> createRoutineDetailList(List<CreateRoutineDetailDto> details);
+	List<RoutineDetailEntity> createRoutineDetailList(List<CreateRoutineDetailDto> dto);
 
-	RoutineDetailEntity createRoutineDetail(RoutineDetailEntity detail);
+	RoutineDetailEntity createRoutineDetail(CreateRoutineDetailDto dto);
 
 	RoutineDetailEntity getRoutineDetailById(UUID id);
 

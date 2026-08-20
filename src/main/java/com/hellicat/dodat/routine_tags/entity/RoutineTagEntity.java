@@ -1,7 +1,7 @@
 package com.hellicat.dodat.routine_tags.entity;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import org.hibernate.annotations.UuidGenerator;
@@ -31,11 +31,12 @@ public class RoutineTagEntity extends BaseTimeEntity {
 	private String tag;
 
 	@ManyToMany(mappedBy = "tags")
-	private Set<RoutineDetailEntity> routineDetails = new HashSet<RoutineDetailEntity>();
+	private List<RoutineDetailEntity> routineDetails = new ArrayList<RoutineDetailEntity>();
 
 	@Builder
-	public RoutineTagEntity(String tag) {
+	public RoutineTagEntity(String tag, RoutineDetailEntity detail) {
 		this.tag = tag;
+		this.routineDetails.add(detail);
 	}
 
 	public void editTag(String tag) {

@@ -27,6 +27,11 @@ public class RoutineDetailController {
 
 	private final RoutineDetailServiceImpl r_detailService;
 
+	// 상세루틴 벌크 생성
+
+	// 상세로틴 생성
+
+	// 루틴의 상세루틴 배열 조회
 	@GetMapping("/routines/{routineId}")
 	public ResponseEntity<ResultDto<List<RoutineDetailResponseDto>>> findRoutinesById(@PathVariable("routineId")
 	UUID id) {
@@ -39,6 +44,7 @@ public class RoutineDetailController {
 		return ResponseEntity.ok(ResultDto.success(null, list));
 	}
 
+	// 해당 상세루틴 조회
 	@GetMapping("/{id}")
 	public ResponseEntity<ResultDto<RoutineDetailResponseDto>> getRoutineDetailById(@PathVariable("id")
 	UUID id) {
@@ -46,6 +52,7 @@ public class RoutineDetailController {
 		return ResponseEntity.ok(ResultDto.success("디테일 루틴 불러오기 성공", RoutineDetailResponseDto.from(detail)));
 	}
 
+	// 해당 상세루틴 업데이트 
 	@PatchMapping("/{id}/update")
 	public ResponseEntity<ResultDto<Void>> updateRoutineDetail(@PathVariable("id")
 	UUID id, @RequestBody

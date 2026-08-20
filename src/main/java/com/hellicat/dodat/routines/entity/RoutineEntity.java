@@ -66,12 +66,12 @@ public class RoutineEntity extends BaseTimeEntity {
 	@Builder
 	private RoutineEntity(
 		String title,
-		String dsec,
+		String desc,
 		OneDepthEnums category,
 		UserEntity user) {
 
 		this.routine_title = title;
-		this.routine_desc = dsec;
+		this.routine_desc = desc;
 		this.category = category;
 		this.user = user;
 
