@@ -39,7 +39,7 @@ public class RoutineTagEntity extends BaseTimeEntity {
 		this.routineDetails.add(detail);
 	}
 
-	public void editTag(String tag) {
+	public void updateTag(String tag) {
 		this.tag = tag;
 	}
 

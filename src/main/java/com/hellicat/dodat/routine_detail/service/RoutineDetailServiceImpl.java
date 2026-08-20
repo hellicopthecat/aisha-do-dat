@@ -12,19 +12,20 @@ import com.hellicat.dodat.routine_detail.dto.request.UpdateRoutineDetailDto;
 import com.hellicat.dodat.routine_detail.entity.RoutineDetailEntity;
 import com.hellicat.dodat.routine_detail.repo.RoutineDetailRepo;
 import com.hellicat.dodat.routine_tags.entity.RoutineTagEntity;
+import com.hellicat.dodat.routine_tags.repo.RoutineTagRepo;
 
 import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class RoutineDetailServiceImpl implements RoutineDetailService {
 
-	private final RoutineDetailRepo repo;
-
-	public RoutineDetailServiceImpl(RoutineDetailRepo repo) {
-		this.repo = repo;
-	}
+	private final RoutineDetailRepo r_detailRepo;
+	private final RoutineTagRepo r_tagRepo;
 
 	@Override
+	@Transactional
 	public List<RoutineDetailEntity> createRoutineDetailList(List<CreateRoutineDetailDto> details) {
 
 		List<RoutineDetailEntity> newDetails = new ArrayList<RoutineDetailEntity>();
@@ -44,12 +45,14 @@ public class RoutineDetailServiceImpl implements RoutineDetailService {
 					.tag(tag)
 					.detail(routineDetailEntity)
 					.build();
+
+				r_tagRepo.save(routineTagEntity);
+
 				newTags.add(routineTagEntity);
 			}
 
 			routineDetailEntity.updateTags(newTags);
-
-			RoutineDetailEntity save = repo.save(routineDetailEntity);
+			RoutineDetailEntity save = r_detailRepo.save(routineDetailEntity);
 			newDetails.add(save);
 		}
 
@@ -67,16 +70,21 @@ public class RoutineDetailServiceImpl implements RoutineDetailService {
 			.end_at(detail.end_at())
 			.routine_desc_txt(detail.routine_desc_txt()).build();
 
-		return repo.save(newOne);
+		for (String tag : detail.tags()) {
+			RoutineTagEntity newTag = RoutineTagEntity.builder().tag(tag).detail(newOne).build();
+			r_tagRepo.save(newTag);
+		}
+
+		return r_detailRepo.save(newOne);
 	}
 
 	@Override
 	public RoutineDetailEntity getRoutineDetailById(UUID id) {
-		return repo.getRoutineDetailById(id).orElseThrow(() -> new EntityNotFoundException("해당 상세루틴은 존재하지 않습니다."));
+		return r_detailRepo.getRoutineDetailById(id).orElseThrow(() -> new EntityNotFoundException("해당 상세루틴은 존재하지 않습니다."));
 	}
 
 	public List<RoutineDetailEntity> findRoutinesById(UUID routindId) {
-		return repo.findRoutinesById(routindId);
+		return r_detailRepo.findRoutinesById(routindId);
 	}
 
 	@Transactional
