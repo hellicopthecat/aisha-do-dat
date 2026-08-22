@@ -7,17 +7,19 @@ import org.springframework.stereotype.Service;
 import com.hellicat.dodat.commons.enums.AccessEnum;
 import com.hellicat.dodat.routine_access.entity.RoutineAccessEntity;
 import com.hellicat.dodat.routine_access.repo.RoutineAccessRepo;
+import com.hellicat.dodat.routines.service.RoutineServiceImpl;
+import com.hellicat.dodat.users.service.UserServiceImpl;
 
 import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class RoutineAccessServiceImpl implements RoutineAccessService {
 
 	private final RoutineAccessRepo repo;
-
-	public RoutineAccessServiceImpl(RoutineAccessRepo repo) {
-		this.repo = repo;
-	}
+	private final RoutineServiceImpl r_service;
+	private final UserServiceImpl u_service;
 
 	@Override
 	public RoutineAccessEntity createAccessRoutine(RoutineAccessEntity access) {
