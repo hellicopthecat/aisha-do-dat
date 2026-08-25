@@ -5,9 +5,12 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 
 import com.hellicat.dodat.commons.enums.AccessEnum;
+import com.hellicat.dodat.routine_access.dto.request.CreateAccessRoutineDto;
 import com.hellicat.dodat.routine_access.entity.RoutineAccessEntity;
 import com.hellicat.dodat.routine_access.repo.RoutineAccessRepo;
+import com.hellicat.dodat.routines.entity.RoutineEntity;
 import com.hellicat.dodat.routines.service.RoutineServiceImpl;
+import com.hellicat.dodat.users.entity.UserEntity;
 import com.hellicat.dodat.users.service.UserServiceImpl;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -22,8 +25,20 @@ public class RoutineAccessServiceImpl implements RoutineAccessService {
 	private final UserServiceImpl u_service;
 
 	@Override
-	public RoutineAccessEntity createAccessRoutine(RoutineAccessEntity access) {
-		return repo.save(access);
+	public RoutineAccessEntity createAccessRoutine(CreateAccessRoutineDto dto) {
+
+		RoutineEntity routine = r_service.getRoutine(dto.routine_id());
+		UserEntity owner = u_service.findUserById(dto.owner_id());
+		UserEntity accessUser = u_service.findUserById(dto.access_user_id());
+
+		RoutineAccessEntity routineAccess = RoutineAccessEntity.builder()
+			.accessState(dto.status())
+			.owner(owner)
+			.access(accessUser)
+			.routine(routine)
+			.build();
+
+		return repo.save(routineAccess);
 	}
 
 	@Override
@@ -35,4 +50,5 @@ public class RoutineAccessServiceImpl implements RoutineAccessService {
 		RoutineAccessEntity accessRoutine = getAccessRoutine(id);
 		accessRoutine.updateAccessStatus(status);
 	}
+
 }

@@ -46,7 +46,8 @@ public class RoutineAccessEntity extends BaseTimeEntity {
 	private RoutineEntity routine;
 
 	@Builder
-	private RoutineAccessEntity(UserEntity owner, UserEntity access, RoutineEntity routine) {
+	private RoutineAccessEntity(AccessEnum accessState, UserEntity owner, UserEntity access, RoutineEntity routine) {
+		this.can_access = accessState;
 		this.owner_user = owner;
 		this.access_user = access;
 		this.routine = routine;
