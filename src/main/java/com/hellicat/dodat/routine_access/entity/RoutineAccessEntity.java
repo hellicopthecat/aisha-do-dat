@@ -5,6 +5,7 @@ import java.util.UUID;
 import org.hibernate.annotations.UuidGenerator;
 
 import com.hellicat.dodat.commons.enums.AccessEnum;
+import com.hellicat.dodat.commons.enums.AccessRoleEnum;
 import com.hellicat.dodat.global.entity.BaseTimeEntity;
 import com.hellicat.dodat.routines.entity.RoutineEntity;
 import com.hellicat.dodat.users.entity.UserEntity;
@@ -33,6 +34,10 @@ public class RoutineAccessEntity extends BaseTimeEntity {
 	@Enumerated(EnumType.STRING)
 	private AccessEnum can_access = AccessEnum.DENIED;
 
+	// 루틴접근 사용권한 
+	@Enumerated(EnumType.STRING)
+	private AccessRoleEnum editable = AccessRoleEnum.READ;
+
 	@ManyToOne
 	@JoinColumn(name = "owner_user_id", nullable = false)
 	private UserEntity owner_user;
@@ -55,5 +60,9 @@ public class RoutineAccessEntity extends BaseTimeEntity {
 
 	public void updateAccessStatus(AccessEnum status) {
 		this.can_access = status;
+	}
+
+	public void updateAccessRole(AccessRoleEnum editable) {
+		this.editable = editable;
 	}
 }

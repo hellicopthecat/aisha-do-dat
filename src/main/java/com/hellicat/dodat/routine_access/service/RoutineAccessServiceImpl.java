@@ -28,7 +28,17 @@ public class RoutineAccessServiceImpl implements RoutineAccessService {
 	public RoutineAccessEntity createAccessRoutine(CreateAccessRoutineDto dto) {
 
 		RoutineEntity routine = r_service.getRoutine(dto.routine_id());
+
+		if (routine.getUser().getId().equals(dto.owner_id())) {
+			throw new IllegalArgumentException("루틴의 소유자가 아닙니다.");
+		}
+
 		UserEntity owner = u_service.findUserById(dto.owner_id());
+
+		if (owner.getId().equals(dto.access_user_id())) {
+			throw new IllegalArgumentException("본인을 대상으로 접근권한을 부여할 수 없습니다.");
+		}
+
 		UserEntity accessUser = u_service.findUserById(dto.access_user_id());
 
 		RoutineAccessEntity routineAccess = RoutineAccessEntity.builder()
