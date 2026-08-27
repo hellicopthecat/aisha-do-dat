@@ -4,11 +4,11 @@ import java.util.UUID;
 
 import com.hellicat.dodat.users.entity.UserEntity;
 
-public record FindUserResponseDto(
+public record UserResponseDto(
 	UUID id,
 	String email) {
-	public static FindUserResponseDto from(UserEntity user) {
-		return new FindUserResponseDto(
+	public static UserResponseDto from(UserEntity user) {
+		return new UserResponseDto(
 			user.getId(),
 			user.getEmail());
 	}

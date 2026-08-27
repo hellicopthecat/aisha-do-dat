@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.hellicat.dodat.global.dto.ResultDto;
 import com.hellicat.dodat.security.JwtTokenProvider;
-import com.hellicat.dodat.users.dto.response.FindUserResponseDto;
+import com.hellicat.dodat.users.dto.response.UserResponseDto;
 import com.hellicat.dodat.users.entity.UserEntity;
 import com.hellicat.dodat.users.service.UserServiceImpl;
 
@@ -28,14 +28,14 @@ public class UserController {
 	private final JwtTokenProvider jwtTokenProvider;
 
 	@GetMapping("/find")
-	public ResponseEntity<ResultDto<FindUserResponseDto>> findUserByEmail(
+	public ResponseEntity<ResultDto<UserResponseDto>> findUserByEmail(
 		@RequestParam()
 		String email) {
 
 		UserEntity user = userService.findUserByEmail(email);
 
 		return ResponseEntity.ok(
-			ResultDto.success(email, FindUserResponseDto.from(user)));
+			ResultDto.success(email, UserResponseDto.from(user)));
 	}
 
 	@GetMapping("/logout")
