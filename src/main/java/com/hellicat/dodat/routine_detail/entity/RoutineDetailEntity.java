@@ -47,7 +47,7 @@ public class RoutineDetailEntity extends BaseTimeEntity {
 	private LocalDateTime end_at; // 루틴이 끝난 시점
 
 	@Column
-	private String routine_desc_txt; //상세 루틴 설명 마크다운용
+	private String routine_desc_txt; //상세 루틴 설명 마크다운용 // TODO: one to many로 바꿔야함.
 
 	@ManyToMany
 	@JoinTable(name = "routine_detail_tag", joinColumns = @JoinColumn(name = "routine_detail_id"), inverseJoinColumns = @JoinColumn(name = "routine_tag_id"))
