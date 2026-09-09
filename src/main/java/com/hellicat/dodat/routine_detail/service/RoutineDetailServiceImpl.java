@@ -37,7 +37,7 @@ public class RoutineDetailServiceImpl implements RoutineDetailService {
 				.pre_event_end_at(detail.pre_event_end_at())
 				.start_at(detail.start_at())
 				.end_at(detail.end_at())
-				.routine_desc_txt(detail.routine_desc_txt())
+				//				.routine_desc_txt(detail.routine_desc_txt())
 				.build();
 
 			for (String tag : detail.tags()) {
@@ -68,7 +68,8 @@ public class RoutineDetailServiceImpl implements RoutineDetailService {
 			.pre_event_end_at(detail.pre_event_end_at())
 			.start_at(detail.start_at())
 			.end_at(detail.end_at())
-			.routine_desc_txt(detail.routine_desc_txt()).build();
+			//			.routine_desc_txt(detail.routine_desc_txt())
+			.build();
 
 		for (String tag : detail.tags()) {
 			RoutineTagEntity newTag = RoutineTagEntity.builder().tag(tag).detail(newOne).build();
@@ -118,9 +119,9 @@ public class RoutineDetailServiceImpl implements RoutineDetailService {
 			routineDetail.updateEndAt(dto.end_at);
 		}
 
-		if (dto.routine_desc_txt != null) {
-			routineDetail.updateDescTxt(dto.routine_desc_txt);
-		}
+		//		if (dto.routine_desc_txt != null) {
+		//			routineDetail.updateDescTxt(dto.routine_desc_txt);
+		//		}
 
 	}
 }

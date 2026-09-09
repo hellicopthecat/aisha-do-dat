@@ -1,12 +1,14 @@
 package com.hellicat.dodat.routine_detail.entity;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 import org.hibernate.annotations.UuidGenerator;
 
 import com.hellicat.dodat.global.entity.BaseTimeEntity;
+import com.hellicat.dodat.routine_detail_descs.entity.RoutineDetailDescsEntity;
 import com.hellicat.dodat.routine_tags.entity.RoutineTagEntity;
 import com.hellicat.dodat.routines.entity.RoutineEntity;
 
@@ -17,6 +19,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -46,8 +49,8 @@ public class RoutineDetailEntity extends BaseTimeEntity {
 	@Column
 	private LocalDateTime end_at; // 루틴이 끝난 시점
 
-	@Column
-	private String routine_desc_txt; //상세 루틴 설명 마크다운용 // TODO: one to many로 바꿔야함.
+	@OneToMany
+	private List<RoutineDetailDescsEntity> routine_desc = new ArrayList<RoutineDetailDescsEntity>(); //상세 루틴 설명 마크다운용 // TODO: one to many로 바꿔야함.
 
 	@ManyToMany
 	@JoinTable(name = "routine_detail_tag", joinColumns = @JoinColumn(name = "routine_detail_id"), inverseJoinColumns = @JoinColumn(name = "routine_tag_id"))
@@ -64,14 +67,12 @@ public class RoutineDetailEntity extends BaseTimeEntity {
 		LocalDateTime pre_event_end_at,
 		LocalDateTime start_at,
 		LocalDateTime end_at,
-		String routine_desc_txt,
 		List<RoutineTagEntity> tags) {
 		this.priorityTwoDepth = priorityTwoDepth;
 		this.pre_event_start_at = pre_event_start_at;
 		this.pre_event_end_at = pre_event_end_at;
 		this.start_at = start_at;
 		this.end_at = end_at;
-		this.routine_desc_txt = routine_desc_txt;
 		this.tags = tags;
 	}
 
@@ -95,9 +96,9 @@ public class RoutineDetailEntity extends BaseTimeEntity {
 		this.end_at = time;
 	}
 
-	public void updateDescTxt(String txt) {
-		this.routine_desc_txt = txt;
-	}
+	//	public void updateDescTxt(String txt) {
+	//		this.routine_desc_txt = txt;
+	//	}
 
 	public void updateTags(List<RoutineTagEntity> tags) {
 		this.tags = tags;
