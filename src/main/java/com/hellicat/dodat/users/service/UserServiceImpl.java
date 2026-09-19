@@ -34,14 +34,15 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserEntity getUserByEmail(String email) {
-		return userRepo.findByEmail(email).orElseThrow(() -> new EntityNotFoundException(email));
+	public void deleteUser(UUID id) {
+		// TODO Auto-generated method stub
+		return;
 	}
 
 	@Override
 	@Transactional
 	public void updateRefreshToken(String email, String refreshToken) {
-		UserEntity user = getUserByEmail(email);
+		UserEntity user = findUserByEmail(email);
 		user.updateRefreshToken(refreshToken);
 	}
 

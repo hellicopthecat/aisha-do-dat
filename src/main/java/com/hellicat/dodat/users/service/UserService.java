@@ -1,5 +1,7 @@
 package com.hellicat.dodat.users.service;
 
+import java.util.UUID;
+
 import org.springframework.stereotype.Service;
 
 import com.hellicat.dodat.users.entity.UserEntity;
@@ -11,8 +13,8 @@ public interface UserService {
 
 	UserEntity findUserByEmail(String email);
 
-	UserEntity getUserByEmail(String email);
-
 	void updateRefreshToken(String email, String refreshToken);
+
+	void deleteUser(UUID id);
 
 }
