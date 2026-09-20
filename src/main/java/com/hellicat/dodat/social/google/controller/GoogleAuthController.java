@@ -31,21 +31,16 @@ import com.hellicat.dodat.users.service.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 
 @RequestMapping("/api/auth/google")
 @RestController
+@RequiredArgsConstructor
 public class GoogleAuthController {
 
 	private final UserService userService;
 	private final JwtTokenProvider jwtProvider;
 	private final CsrfTokenRepository csrfTokenRepository;
-
-	public GoogleAuthController(UserService userService, JwtTokenProvider provider,
-		CsrfTokenRepository csrfTokenRepository) {
-		this.userService = userService;
-		this.jwtProvider = provider;
-		this.csrfTokenRepository = csrfTokenRepository;
-	}
 
 	@GetMapping("/login")
 	public void googleLogin(HttpServletResponse res) throws IOException {

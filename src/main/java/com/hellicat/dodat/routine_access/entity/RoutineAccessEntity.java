@@ -39,10 +39,6 @@ public class RoutineAccessEntity extends BaseTimeEntity {
 	private AccessRoleEnum editable = AccessRoleEnum.READ;
 
 	@ManyToOne
-	@JoinColumn(name = "owner_user_id", nullable = false)
-	private UserEntity owner_user;
-
-	@ManyToOne
 	@JoinColumn(name = "access_user_id", nullable = false)
 	private UserEntity access_user;
 
@@ -51,9 +47,9 @@ public class RoutineAccessEntity extends BaseTimeEntity {
 	private RoutineEntity routine;
 
 	@Builder
-	private RoutineAccessEntity(AccessEnum accessState, UserEntity owner, UserEntity access, RoutineEntity routine) {
+	private RoutineAccessEntity(AccessEnum accessState,
+		UserEntity access, RoutineEntity routine) {
 		this.can_access = accessState;
-		this.owner_user = owner;
 		this.access_user = access;
 		this.routine = routine;
 	}

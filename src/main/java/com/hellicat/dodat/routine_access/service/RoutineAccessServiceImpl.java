@@ -27,9 +27,9 @@ public class RoutineAccessServiceImpl implements RoutineAccessService {
 	@Override
 	public RoutineAccessEntity createAccessRoutine(CreateAccessRoutineDto dto) {
 
-		RoutineEntity routine = r_service.getRoutine(dto.routine_id());
+		RoutineEntity routine = r_service.findRoutineById(dto.routine_id());
 
-		if (routine.getUser().getId().equals(dto.owner_id())) {
+		if (routine.getOwner().getId().equals(dto.owner_id())) {
 			throw new IllegalArgumentException("루틴의 소유자가 아닙니다.");
 		}
 
@@ -43,7 +43,6 @@ public class RoutineAccessServiceImpl implements RoutineAccessService {
 
 		RoutineAccessEntity routineAccess = RoutineAccessEntity.builder()
 			.accessState(dto.status())
-			.owner(owner)
 			.access(accessUser)
 			.routine(routine)
 			.build();

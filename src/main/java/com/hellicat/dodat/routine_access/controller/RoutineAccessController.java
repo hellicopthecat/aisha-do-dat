@@ -46,7 +46,7 @@ public class RoutineAccessController {
 		@RequestParam(name = "routineId")
 		UUID id) {
 		List<AccessRoutineResponseDto> accessList = new ArrayList<AccessRoutineResponseDto>();
-		RoutineEntity routine = r_service.getRoutine(id);
+		RoutineEntity routine = r_service.findRoutineById(id);
 
 		List<RoutineAccessEntity> routine_access = routine.getRoutine_access();
 

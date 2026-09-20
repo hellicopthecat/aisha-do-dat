@@ -11,7 +11,6 @@ public record AccessRoutineResponseDto(
 	UUID id,
 	AccessEnum accessEnum,
 	AccessRoleEnum accessrole,
-	UserResponseDto owner,
 	UserResponseDto accessUser,
 	UUID routineId
 
@@ -21,7 +20,6 @@ public record AccessRoutineResponseDto(
 			access.getId(),
 			access.getCan_access(),
 			access.getEditable(),
-			UserResponseDto.from(access.getOwner_user()),
 			UserResponseDto.from(access.getAccess_user()),
 			access.getRoutine().getId());
 	}

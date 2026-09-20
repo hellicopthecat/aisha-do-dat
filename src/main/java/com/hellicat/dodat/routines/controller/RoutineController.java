@@ -14,15 +14,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hellicat.dodat.auth.service.AuthService;
 import com.hellicat.dodat.global.dto.ResultDto;
 import com.hellicat.dodat.routine_detail.dto.request.CreateRoutineDetailDto;
 import com.hellicat.dodat.routines.dto.request.RoutineCreateDto;
 import com.hellicat.dodat.routines.dto.request.RoutineUpdateDto;
-import com.hellicat.dodat.routines.dto.response.MyRoutineDto;
-import com.hellicat.dodat.routines.dto.response.RoutineDto;
+import com.hellicat.dodat.routines.dto.response.MyRoutineResponseDto;
+import com.hellicat.dodat.routines.dto.response.RoutineResponseDto;
 import com.hellicat.dodat.routines.entity.RoutineEntity;
 import com.hellicat.dodat.routines.service.RoutineServiceImpl;
-import com.hellicat.dodat.security.JwtTokenProvider;
 import com.hellicat.dodat.users.entity.UserEntity;
 import com.hellicat.dodat.users.service.UserServiceImpl;
 
@@ -36,7 +36,7 @@ public class RoutineController {
 
 	private final UserServiceImpl userService;
 	private final RoutineServiceImpl routineService;
-	private final JwtTokenProvider jwtTokenProvider;
+	private final AuthService authService;
 
 	/**
 	 * 루틴생성 
@@ -52,7 +52,7 @@ public class RoutineController {
 		@RequestBody
 		RoutineCreateDto dto) {
 
-		UUID userId = getUserID(cookie);
+		UUID userId = authService.getUserID(cookie);
 		UserEntity user = userService.findUserById(userId);
 
 		RoutineEntity routine = RoutineEntity.builder()
@@ -78,37 +78,33 @@ public class RoutineController {
 	 * @param cookie
 	 * @return
 	 */
-	@GetMapping()
-	public ResponseEntity<ResultDto<List<MyRoutineDto>>> findAllByUserId(
+	@GetMapping
+	public ResponseEntity<ResultDto<List<MyRoutineResponseDto>>> findAllByUserId(
 		@CookieValue(name = "access_token", required = true)
 		Cookie cookie) {
 
-		UUID userId = getUserID(cookie);
-		List<RoutineEntity> myRoutine = routineService.findAllByUserId(userId);
+		UUID userId = authService.getUserID(cookie);
+		List<RoutineEntity> myRoutine = routineService.findAllRoutinesByUserId(userId);
 
-		return ResponseEntity.ok(ResultDto.success(null, MyRoutineDto.from(myRoutine)));
+		return ResponseEntity.ok(ResultDto.success(null, MyRoutineResponseDto.from(myRoutine)));
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<ResultDto<RoutineDto>> getRoutine(
+	public ResponseEntity<ResultDto<RoutineResponseDto>> findRoutine(
 		@PathVariable("id")
 		UUID uid) {
-		RoutineEntity routine = routineService.getRoutine(uid);
-		return ResponseEntity.ok(ResultDto.success(null, RoutineDto.from(routine)));
+		RoutineEntity routine = routineService.findRoutineById(uid);
+		return ResponseEntity.ok(ResultDto.success(null, RoutineResponseDto.from(routine)));
 	}
 
 	@PatchMapping("/{id}")
-	public ResponseEntity<ResultDto<RoutineDto>> updateRoutine(
+	public ResponseEntity<ResultDto<RoutineResponseDto>> updateRoutine(
 		@PathVariable("id")
 		UUID uid,
 		@RequestBody
 		RoutineUpdateDto dto) {
 		RoutineEntity routine = routineService.updateRoutine(uid, dto);
-		return ResponseEntity.ok(ResultDto.success("루틴 수정 성공", RoutineDto.from(routine)));
+		return ResponseEntity.ok(ResultDto.success("루틴 수정 성공", RoutineResponseDto.from(routine)));
 	}
 
-	private UUID getUserID(Cookie cookie) {
-		UUID userId = jwtTokenProvider.parseUserId(cookie.getValue(), false);
-		return userId;
-	}
 }

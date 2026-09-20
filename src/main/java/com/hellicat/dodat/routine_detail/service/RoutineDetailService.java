@@ -7,11 +7,12 @@ import org.springframework.stereotype.Service;
 
 import com.hellicat.dodat.routine_detail.dto.request.CreateRoutineDetailDto;
 import com.hellicat.dodat.routine_detail.entity.RoutineDetailEntity;
+import com.hellicat.dodat.routines.entity.RoutineEntity;
 
 @Service
 public interface RoutineDetailService {
 
-	List<RoutineDetailEntity> createRoutineDetailList(List<CreateRoutineDetailDto> dto);
+	List<RoutineDetailEntity> createRoutineDetailList(RoutineEntity routine, List<CreateRoutineDetailDto> dto);
 
 	RoutineDetailEntity createRoutineDetail(CreateRoutineDetailDto dto);
 

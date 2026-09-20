@@ -1,6 +1,7 @@
 package com.hellicat.dodat.routines.service;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
@@ -12,4 +13,5 @@ public interface RoutineService {
 
 	public RoutineEntity createRoutine(RoutineEntity routine, List<CreateRoutineDetailDto> detail);
 
+	public List<RoutineEntity> findAllRoutinesByUserId(UUID userID);
 }

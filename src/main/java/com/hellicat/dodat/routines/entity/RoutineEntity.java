@@ -50,14 +50,14 @@ public class RoutineEntity extends BaseTimeEntity {
 	@Column(nullable = false)
 	private OneDepthEnums category = OneDepthEnums.ALL;
 
-	// 루틴의 상세 
-	@OneToMany(mappedBy = "routine")
-	private List<RoutineDetailEntity> routine_detail = new ArrayList<RoutineDetailEntity>();
-
 	// 루틴의 주인(유저) 
 	@ManyToOne
 	@JoinColumn(name = "user_id")
-	private UserEntity user;
+	private UserEntity owner;
+
+	// 루틴의 상세 
+	@OneToMany(mappedBy = "routine")
+	private List<RoutineDetailEntity> routine_detail = new ArrayList<RoutineDetailEntity>();
 
 	// 루틴의 접근자 
 	@OneToMany(mappedBy = "routine")
@@ -73,7 +73,7 @@ public class RoutineEntity extends BaseTimeEntity {
 		this.routine_title = title;
 		this.routine_desc = desc;
 		this.category = category;
-		this.user = user;
+		this.owner = user;
 
 	}
 

@@ -6,7 +6,7 @@ import java.util.UUID;
 import com.hellicat.dodat.commons.enums.OneDepthEnums;
 import com.hellicat.dodat.routines.entity.RoutineEntity;
 
-public record MyRoutineDto(
+public record MyRoutineResponseDto(
 	UUID routineId,
 	String title,
 	String desc,
@@ -15,19 +15,19 @@ public record MyRoutineDto(
 	UUID masterId,
 	List<UUID> accessUserId) {
 
-	public static List<MyRoutineDto> from(List<RoutineEntity> routines) {
+	public static List<MyRoutineResponseDto> from(List<RoutineEntity> routines) {
 
-		List<MyRoutineDto> myRoutines;
+		List<MyRoutineResponseDto> myRoutines;
 
 		myRoutines = routines.stream().map(r -> {
 			List<UUID> accessUser = r.getRoutine_access().stream().map(user -> user.getAccess_user().getId()).toList();
-			return new MyRoutineDto(
+			return new MyRoutineResponseDto(
 				r.getId(),
 				r.getRoutine_title(),
 				r.getRoutine_desc(),
 				r.getPriorityOneDepth(),
 				r.getCategory(),
-				r.getUser().getId(),
+				r.getOwner().getId(),
 				accessUser);
 		}).toList();
 

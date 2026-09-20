@@ -27,22 +27,23 @@ public class RoutineServiceImpl implements RoutineService {
 
 	@Override
 	public RoutineEntity createRoutine(RoutineEntity routine, List<CreateRoutineDetailDto> detailList) {
-		List<RoutineDetailEntity> routineDetails = routineDetailService.createRoutineDetailList(detailList);
+		List<RoutineDetailEntity> routineDetails = routineDetailService.createRoutineDetailList(routine, detailList);
 		routine.initRoutineDetail(routineDetails);
 		return repo.save(routine);
 	}
 
-	public RoutineEntity getRoutine(UUID id) {
+	public RoutineEntity findRoutineById(UUID id) {
 		return repo.findById(id).orElseThrow(() -> new EntityNotFoundException("해당 루틴을 찾을 수 없습니다."));
 	}
 
-	public List<RoutineEntity> findAllByUserId(UUID userId) {
-		return repo.findAllByUser_id(userId);
+	@Override
+	public List<RoutineEntity> findAllRoutinesByUserId(UUID userID) {
+		return repo.findAllByUser_id(userID);
 	}
 
 	@Transactional
 	public RoutineEntity updateRoutine(UUID id, RoutineUpdateDto dto) {
-		RoutineEntity routine = getRoutine(id);
+		RoutineEntity routine = findRoutineById(id);
 		if (dto.title() != null) {
 			routine.updateRoutineTitle(dto.title());
 		}
@@ -59,8 +60,10 @@ public class RoutineServiceImpl implements RoutineService {
 	}
 
 	@Transactional
-	public void addRoutineDetail(UUID id, RoutineDetailEntity detail) {
-		RoutineEntity routine = getRoutine(id);
-		routine.addRoutineDetail(detail);
+	public void addRoutineDetail(UUID id, List<RoutineDetailEntity> details) {
+		RoutineEntity routine = findRoutineById(id);
+		for (RoutineDetailEntity detail : details) {
+			routine.addRoutineDetail(detail);
+		}
 	}
 }

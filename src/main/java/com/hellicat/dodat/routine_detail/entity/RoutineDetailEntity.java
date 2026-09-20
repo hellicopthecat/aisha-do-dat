@@ -67,13 +67,17 @@ public class RoutineDetailEntity extends BaseTimeEntity {
 		LocalDateTime pre_event_end_at,
 		LocalDateTime start_at,
 		LocalDateTime end_at,
-		List<RoutineTagEntity> tags) {
+		List<RoutineTagEntity> tags,
+		List<RoutineDetailDescsEntity> routine_desc,
+		RoutineEntity routine) {
 		this.priorityTwoDepth = priorityTwoDepth;
 		this.pre_event_start_at = pre_event_start_at;
 		this.pre_event_end_at = pre_event_end_at;
 		this.start_at = start_at;
 		this.end_at = end_at;
 		this.tags = tags;
+		this.routine_desc = routine_desc;
+		this.routine = routine;
 	}
 
 	// 예상 시점 업데이트하기  
