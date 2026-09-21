@@ -49,8 +49,8 @@ public class RoutineDetailEntity extends BaseTimeEntity {
 	@Column
 	private LocalDateTime end_at; // 루틴이 끝난 시점
 
-	@OneToMany
-	private List<RoutineDetailDescsEntity> routine_desc = new ArrayList<RoutineDetailDescsEntity>(); //상세 루틴 설명 마크다운용 // TODO: one to many로 바꿔야함.
+	@OneToMany(mappedBy = "routine_detail")
+	private List<RoutineDetailDescsEntity> routine_descs = new ArrayList<RoutineDetailDescsEntity>(); //상세 루틴 설명 마크다운용 // TODO: one to many로 바꿔야함.
 
 	@ManyToMany
 	@JoinTable(name = "routine_detail_tag", joinColumns = @JoinColumn(name = "routine_detail_id"), inverseJoinColumns = @JoinColumn(name = "routine_tag_id"))
@@ -67,17 +67,15 @@ public class RoutineDetailEntity extends BaseTimeEntity {
 		LocalDateTime pre_event_end_at,
 		LocalDateTime start_at,
 		LocalDateTime end_at,
-		List<RoutineTagEntity> tags,
-		List<RoutineDetailDescsEntity> routine_desc,
-		RoutineEntity routine) {
+		RoutineEntity routine,
+		List<RoutineTagEntity> tags) {
 		this.priorityTwoDepth = priorityTwoDepth;
 		this.pre_event_start_at = pre_event_start_at;
 		this.pre_event_end_at = pre_event_end_at;
 		this.start_at = start_at;
 		this.end_at = end_at;
-		this.tags = tags;
-		this.routine_desc = routine_desc;
 		this.routine = routine;
+		this.tags = tags;
 	}
 
 	// 예상 시점 업데이트하기  

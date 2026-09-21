@@ -13,6 +13,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -32,4 +33,9 @@ public class RoutineDetailDescsEntity extends BaseTimeEntity {
 	@JoinColumn(name = "routine_detail_id")
 	private RoutineDetailEntity routine_detail;
 
+	@Builder
+	public RoutineDetailDescsEntity(String desc, RoutineDetailEntity routine_detail) {
+		this.desc = desc;
+		this.routine_detail = routine_detail;
+	}
 }

@@ -15,7 +15,7 @@ public record RoutineDetailResponseDto(
 	LocalDateTime pre_event_end_at,
 	LocalDateTime start_at,
 	LocalDateTime end_at,
-	List<RoutineDetailDescsEntity> routine_desc_txt,
+	List<RoutineDetailDescsEntity> routine_descs,
 	List<RoutineTagEntity> tags,
 	UUID routine_id) {
 
@@ -28,7 +28,7 @@ public record RoutineDetailResponseDto(
 			detail.getPre_event_end_at(),
 			detail.getStart_at(),
 			detail.getEnd_at(),
-			detail.getRoutine_desc(),
+			detail.getRoutine_descs(),
 			detail.getTags(),
 			detail.getRoutine().getId());
 

@@ -11,6 +11,8 @@ import com.hellicat.dodat.routine_detail.dto.request.CreateRoutineDetailDto;
 import com.hellicat.dodat.routine_detail.dto.request.UpdateRoutineDetailDto;
 import com.hellicat.dodat.routine_detail.entity.RoutineDetailEntity;
 import com.hellicat.dodat.routine_detail.repo.RoutineDetailRepo;
+import com.hellicat.dodat.routine_detail_descs.request.CreateRoutineDetailDescDto;
+import com.hellicat.dodat.routine_detail_descs.service.RoutineDetailDescsServiceImpl;
 import com.hellicat.dodat.routine_tags.entity.RoutineTagEntity;
 import com.hellicat.dodat.routine_tags.repo.RoutineTagRepo;
 import com.hellicat.dodat.routines.entity.RoutineEntity;
@@ -24,6 +26,7 @@ public class RoutineDetailServiceImpl implements RoutineDetailService {
 
 	private final RoutineDetailRepo r_detailRepo;
 	private final RoutineTagRepo r_tagRepo;
+	private final RoutineDetailDescsServiceImpl r_desc_service;
 
 	@Override
 	@Transactional
@@ -35,6 +38,7 @@ public class RoutineDetailServiceImpl implements RoutineDetailService {
 		List<RoutineTagEntity> newTags = new ArrayList<RoutineTagEntity>();
 
 		for (CreateRoutineDetailDto detail : details) {
+
 			RoutineDetailEntity routineDetailEntity = RoutineDetailEntity.builder()
 				.priorityTwoDepth(detail.priorityTwoDepth())
 				.pre_event_start_at(detail.pre_event_start_at())
@@ -42,9 +46,12 @@ public class RoutineDetailServiceImpl implements RoutineDetailService {
 				.start_at(detail.start_at())
 				.end_at(detail.end_at())
 				.routine(routine)
-				//				.routine_desc_txt(detail.routine_desc_txt())
 
 				.build();
+
+			CreateRoutineDetailDescDto createRoutineDetailDescDto = new CreateRoutineDetailDescDto(detail.routine_desc_txt(),
+				routineDetailEntity);
+			r_desc_service.createRoutineDetailDesc(createRoutineDetailDescDto);
 
 			for (String tag : detail.tags()) {
 				RoutineTagEntity routineTagEntity = RoutineTagEntity.builder()
